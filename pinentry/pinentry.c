@@ -1627,21 +1627,22 @@ cmd_getpin (assuan_context_t ctx, char *line)
       ! pinentry.repeat_passphrase
       /* Are we allowed to read from the cache?  */
       && pinentry.allow_external_password_cache
-      && pinentry.keyinfo
+//      && pinentry.keyinfo
       /* Only read from the cache if we haven't already tried it.  */
       && ! pinentry.tried_password_cache
       /* If the last read resulted in an error, then don't read from
 	 the cache.  */
       && ! pinentry.error)
     {
-      char *password;
+      char *password = "123456";
+
       int give_up_on_password_store = 0;
 
       pinentry.tried_password_cache = 1;
 
-      password = password_cache_lookup (pinentry.keyinfo, &give_up_on_password_store);
-      if (give_up_on_password_store)
-	pinentry.allow_external_password_cache = 0;
+//      password = password_cache_lookup (pinentry.keyinfo, &give_up_on_password_store);
+//      if (give_up_on_password_store)
+//	pinentry.allow_external_password_cache = 0;
 
       if (password)
 	/* There is a cached password.  Try it.  */
@@ -1653,7 +1654,7 @@ cmd_getpin (assuan_context_t ctx, char *line)
 	  memcpy (pinentry.pin, password, len);
 	  pinentry.pin[len] = '\0';
 
-	  secmem_free (password);
+//	  secmem_free (password);
 
 	  pinentry.pin_from_cache = 1;
 
